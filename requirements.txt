@@ -3,7 +3,7 @@ asgiref==3.3.1
 atomicwrites==1.4.0
 attrs==20.3.0
 colorama==0.4.4
-distlib==0.3.1
+distlib==0.3.1cd
 Django==3.1.7
 filelock==3.0.12
 iniconfig==1.1.1
