@@ -1,0 +1,18 @@
+version: "3.5"
+
+services:
+  stockosaurus-api-db:
+    image: postgres:latest
+    container_name: stockosaurus-api-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: stockosaurus-db
+      POSTGRES_USER: dev-admin
+      POSTGRES_PASSWORD: 1234!
+    ports:
+      - "5432:5432"
+    volumes:
+      - stockosaurus-api-db-data:/var/lib/postgres
+
+volumes:
+  stockosaurus-api-db-data:
