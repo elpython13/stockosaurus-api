@@ -1,3 +1,10 @@
 from django.db import models
 
-# Create your models here.
+
+class StockPrice(models.Model):
+	price = models.FloatField()
+	time = models.DateTimeField()
+	ticker_symbol = models.TextField()
+
+	class Meta:
+		ordering = ['time']
