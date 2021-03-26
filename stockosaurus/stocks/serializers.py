@@ -1,16 +1,18 @@
 from rest_framework import serializers
+from django.contrib.auth.models import User
 
-from stockosaurus.stocks.models import StockPrice
+from .models import StockPrice
 
 
-class StockPriceSerializer(serializers.Serializer):
-	id = serializers.IntegerField(read_only=True)
-	price = serializers.FloatField()
-	time = serializers.DateTimeField()
-	ticker_symbol = serializers.CharField()
+class StockPriceSerializer(serializers.HyperlinkedModelSerializer):
+	owner = serializers.ReadOnlyField(source='owner.username')
+
+	class Meta:
+		model = StockPrice
+		fields = ['id', 'price', 'time', 'ticker_symbol', 'owner']
 
 	def create(self, validated_data):
-		return StockPrice.object.create(**validated_data)
+		return StockPrice.objects.create(**validated_data)
 
 	def update(self, instance, validated_data):
 		instance.price = validated_data.get('price', instance.price)
@@ -18,3 +20,11 @@ class StockPriceSerializer(serializers.Serializer):
 		instance.ticker_symbol = validated_data.get('ticker_symbol', instance.price)
 		instance.save()
 		return instance
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+	# stocks = serializers.HyperlinkedRelatedField(many=True, view_name='user-detail', read_only=True)
+
+	class Meta:
+		model = User
+		fields = ['url', 'id', 'username']
