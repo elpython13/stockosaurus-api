@@ -6,38 +6,50 @@ from rest_framework.reverse import reverse
 
 from .models import StockPrice
 from .serializers import StockPriceSerializer, UserSerializer
-from . permissions import IsOwnerOrReadOnly
+from .permissions import IsOwnerOrReadOnly
 
 
 @api_view(['GET'])
 def api_root(request, format=None):
-    return Response({
-        'users': reverse('user-list', request=request, format=format),
-        'stocks': reverse('stock-list', request=request, format=format)
-    })
+	return Response({
+		'users': reverse('user-list', request=request, format=format),
+		'stocks': reverse('stock-list', request=request, format=format)
+	})
 
 
 class StockList(generics.ListAPIView):
-    queryset = StockPrice.objects.all()
-    serializer_class = StockPriceSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+	serializer_class = StockPriceSerializer
+	permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+	def get_queryset(self):
+		queryset = StockPrice.objects.all()
+		ticker = self.request.query_params.get('ticker')
+		start = self.request.query_params.get('start')
+		end = self.request.query_params.get('end')
+
+		if ticker is not None:
+			queryset = queryset.filter(ticker_symbol=str(ticker).upper())
+
+		if start is not None:
+			queryset = queryset.filter(time__gte=start)
+
+		if end is not None:
+			queryset = queryset.filter(time__lte=end)
+
+		return queryset
 
 
 class StockDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = StockPrice.objects.all()
-    serializer_class = StockPriceSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+	queryset = StockPrice.objects.all()
+	serializer_class = StockPriceSerializer
+	permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 
 class UserList(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+	queryset = User.objects.all()
+	serializer_class = UserSerializer
 
 
 class UserDetail(generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
+	queryset = User.objects.all()
+	serializer_class = UserSerializer
