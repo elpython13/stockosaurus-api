@@ -12,7 +12,8 @@ from .permissions import IsOwnerOrReadOnly
 def api_root(request, format=None):
 	return Response({
 		'users': reverse('user-list', request=request, format=format),
-		'stocks': reverse('stock-list', request=request, format=format)
+		'stocks': reverse('stock-list', request=request, format=format),
+		'tickers': reverse('ticker-list', request=request, format=format),
 	})
 
 
@@ -40,6 +41,12 @@ class StockList(generics.ListAPIView):
 
 class StockDetail(generics.RetrieveUpdateDestroyAPIView):
 	queryset = StockPrice.objects.all()
+	serializer_class = StockPriceSerializer
+	permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
+
+class TickerList(generics.ListAPIView):
+	queryset = StockPrice.objects.order_by('ticker_symbol').distinct('ticker_symbol')
 	serializer_class = StockPriceSerializer
 	permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 

@@ -16,3 +16,11 @@ INSERT INTO public.stocks_stockprice (id, price, time, ticker_symbol) VALUES (15
 INSERT INTO public.stocks_stockprice (id, price, time, ticker_symbol) VALUES (16, 150, '2021-03-29 18:45:02.986000', 'MARA');
 INSERT INTO public.stocks_stockprice (id, price, time, ticker_symbol) VALUES (17, 120, '2021-03-29 18:46:34.719000', 'MARA');
 INSERT INTO public.stocks_stockprice (id, price, time, ticker_symbol) VALUES (18, 100, '2021-03-29 18:47:45.455000', 'MARA');
+
+INSERT INTO public.stocks_stockprice (id, price, time, ticker_symbol) VALUES (19, 600, '2021-03-30 12:23:45.455000', 'TSLA');
+INSERT INTO public.stocks_stockprice (id, price, time, ticker_symbol) VALUES (20, 640, '2021-03-30 12:33:45.455000', 'TSLA');
+INSERT INTO public.stocks_stockprice (id, price, time, ticker_symbol) VALUES (21, 700, '2021-03-30 12:43:45.455000', 'TSLA');
+
+INSERT INTO public.stocks_stockprice (id, price, time, ticker_symbol) VALUES (22, 3000, '2021-03-30 12:45:45.455000', 'AMZN');
+INSERT INTO public.stocks_stockprice (id, price, time, ticker_symbol) VALUES (23, 3100, '2021-03-30 13:15:45.455000', 'AMZN');
+INSERT INTO public.stocks_stockprice (id, price, time, ticker_symbol) VALUES (24, 3200, '2021-03-30 13:43:45.455000', 'AMZN');
