@@ -1,6 +1,4 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
-
 from .models import StockPrice
 
 
@@ -21,10 +19,3 @@ class StockPriceSerializer(serializers.HyperlinkedModelSerializer):
 		instance.save()
 		return instance
 
-
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-	# stocks = serializers.HyperlinkedRelatedField(many=True, view_name='user-detail', read_only=True)
-
-	class Meta:
-		model = User
-		fields = ['url', 'id', 'username']

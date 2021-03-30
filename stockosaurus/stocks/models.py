@@ -6,7 +6,7 @@ class StockPrice(models.Model):
 	price = models.FloatField()
 	time = models.DateTimeField()
 	ticker_symbol = models.TextField()
-	# owner = models.ForeignKey('auth.User', related_name='StockPrice', on_delete=models.CASCADE, default=None)
+	owner = models.ForeignKey('auth.User', related_name='StockPrice', on_delete=models.CASCADE, default=None)
 
 	class Meta:
 		ordering = ['time']
