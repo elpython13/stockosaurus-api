@@ -11,3 +11,16 @@ class StockPrice(models.Model):
 	class Meta:
 		ordering = ['time']
 
+
+class NasdaqDaily(models.Model):
+	id = models.IntegerField(primary_key=True, default=0)
+	date = models.DateTimeField()
+	open = models.FloatField()
+	high = models.FloatField()
+	low = models.FloatField()
+	close = models.FloatField()
+	volume = models.IntegerField()
+	ticker = models.TextField()
+
+	class Meta:
+		ordering = ['date']

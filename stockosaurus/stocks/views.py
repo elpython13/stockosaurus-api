@@ -3,8 +3,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 
-from .models import StockPrice
-from .serializers import StockPriceSerializer
+from .models import StockPrice, NasdaqDaily
+from .serializers import StockPriceSerializer, NasdaqDailySerializer
 from .permissions import IsOwnerOrReadOnly
 
 
@@ -19,7 +19,7 @@ def api_root(request, format=None):
 
 class StockList(generics.ListAPIView):
 	serializer_class = StockPriceSerializer
-	permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+	#permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 	def get_queryset(self):
 		queryset = StockPrice.objects.all()
@@ -50,3 +50,16 @@ class TickerList(generics.ListAPIView):
 	serializer_class = StockPriceSerializer
 	permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
+
+class NasdaqDailyList(generics.ListAPIView):
+	serializer_class = NasdaqDailySerializer
+	permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
+	def get_queryset(self):
+		queryset = NasdaqDaily.objects.all()
+		ticker = self.request.query_params.get('ticker')
+
+		if ticker is not None:
+			queryset = queryset.filter(ticker=str(ticker).upper())
+		
+		return queryset
