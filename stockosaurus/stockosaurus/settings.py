@@ -79,8 +79,8 @@ DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.postgresql_psycopg2',
 		'NAME': 'stockosaurus-db',
-		'USER': 'dev-admin',
-		'PASSWORD': '123!',
+		'USER': 'postgres',
+		'PASSWORD': 'oxford123',
 		'HOST': 'localhost',
 		'PORT': '5432',
 	}
